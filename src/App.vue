@@ -28,6 +28,13 @@ const digits = computed(() => numberToArray(app.current))
       {{ app.caption }}
     </div>
   </main>
+  <footer class="fixed bottom-3 w-full block">
+    <p class="text-center text-orange-40">
+      Developed by
+      <a href="https://github.com/mjkhonline" target="_blank">@mjkhonline</a>
+      at Nobitex - 2024
+    </p>
+  </footer>
 </template>
 
 <style scoped>
