@@ -9,17 +9,19 @@ export const useAppStore = defineStore('app', () => {
   const start = ref(0)
   const target = ref(0)
   const reachAt = ref(new Date())
+  const pauseOnTarget = ref(0)
   const startTime = ref(new Date())
   const caption = ref('')
   const current = ref(new Dec(0))
   const interval = ref(0)
   const isReached = ref(false)
 
-  function setupApp(data : { start: number, target: number, reachAt: Date, caption: string }) {
+  function setupApp(data : { start: number, target: number, reachAt: Date, pauseOnTarget: number, caption: string }) {
     start.value = data.start
     current.value = new Dec(data.start)
     target.value = data.target
     reachAt.value = data.reachAt
+    pauseOnTarget.value = data.pauseOnTarget
     startTime.value = new Date()
     caption.value = data.caption
     isSetup.value = true
@@ -42,7 +44,7 @@ export const useAppStore = defineStore('app', () => {
        tick = 0
      }
       const newCurrent = current.value.plus(currentSequence[tick])
-      if (newCurrent.greaterThanOrEqualTo(target.value)) {
+      if (newCurrent.greaterThanOrEqualTo(target.value) && !isReached.value) {
         stopCounting()
         current.value = new Dec(target.value)
         setIsReached()
@@ -58,6 +60,8 @@ export const useAppStore = defineStore('app', () => {
 
   function setIsReached() {
     isReached.value = true
+    setTimeout(startCounting, pauseOnTarget.value * 1000)
+
     const confetti = new ConfettiGenerator({
       target: 'my-canvas',
       max: 120,

@@ -9,6 +9,7 @@ const formData = useStorage('form-data', {
   start: 0,
   target: 100,
   reachAt: '00:00',
+  pauseOnTarget: 60,
   caption: ''
 })
 function onClick() {
@@ -16,6 +17,7 @@ function onClick() {
     start: formData.value.start,
     target: formData.value.target,
     reachAt: convertTimeToDate(formData.value.reachAt),
+    pauseOnTarget: formData.value.pauseOnTarget,
     caption: formData.value.caption
   })
 }
@@ -42,6 +44,13 @@ function onClick() {
         Reach Target at:
       </span>
       <input v-model="formData.reachAt" class="p-2 rounded-md ml-3 w-full" type="time">
+    </label>
+
+    <label class="flex items-center mb-8">
+      <span class="text-nowrap">
+        Pause on Target (seconds):
+      </span>
+      <input v-model="formData.pauseOnTarget" class="p-2 rounded-md ml-3 w-full" type="number">
     </label>
 
     <label class="flex items-center mb-8">
